@@ -2,9 +2,7 @@ package iqmed.com.patientmonitor;
 
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothDevice;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.ListAdapter;
 import android.widget.Switch;
 
 import com.jraska.console.Console;
@@ -20,7 +17,7 @@ import com.jraska.console.Console;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.aflak.bluetooth.Bluetooth;
+import iqmed.com.patientmonitor.bluetooth.Bluetooth;
 
 
 public class DemoBluetoothFragment extends Fragment {
@@ -30,8 +27,9 @@ public class DemoBluetoothFragment extends Fragment {
     private int resId;
     private Switch rpiSwitch;
     private Switch nibpSwitch;
-    private String rpiAddress;
-    private String nibpAddress;
+    private me.aflak.bluetooth.Bluetooth bluetooth;
+    private Bluetooth rpiBluetooth;
+    private Bluetooth nibpBluetooth;
 
     public DemoBluetoothFragment() {
         // Required empty public constructor
@@ -66,13 +64,17 @@ public class DemoBluetoothFragment extends Fragment {
         View view = getView();
         rpiSwitch = view.findViewById(R.id.switch_rpi);
         nibpSwitch = view.findViewById(R.id.switch_nibp);
+        rpiBluetooth = new Bluetooth(getContext());
+        nibpBluetooth = new Bluetooth(getContext());
+        bluetooth = new me.aflak.bluetooth.Bluetooth(getContext());
+        bluetooth.showEnableDialog(getActivity());
 
         // Set event for rpiSwitch
         rpiSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-
+                    getDeviceAddressFromDialog(rpiBluetooth, rpiSwitch);
                 }
             }
         });
@@ -80,14 +82,14 @@ public class DemoBluetoothFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    //TODO: show device dialog
+                    getDeviceAddressFromDialog(nibpBluetooth, nibpSwitch);
                 }
             }
         });
         Console.writeLine("hello world");
     }
 
-    private void getDeviceAddressFromDialog(final DeviceDialogModalListener listener) {
+    private void getDeviceAddressFromDialog(final DeviceDialogModalListener listener, final Switch ui) {
         ArrayList<String> devicesNames = new ArrayList<>();
         String address;
         final List<BluetoothDevice> pairDevices = bluetooth.getPairedDevices();
@@ -111,7 +113,9 @@ public class DemoBluetoothFragment extends Fragment {
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {}
+            public void onClick(DialogInterface dialog, int which) {
+                ui.setChecked(false);
+            }
         });
         builder.create().show();
     }
@@ -122,7 +126,6 @@ public class DemoBluetoothFragment extends Fragment {
         super.onStart();
     }
 
-    @Override
     public void onStop() {
         bluetooth.onStop();
         super.onStop();
