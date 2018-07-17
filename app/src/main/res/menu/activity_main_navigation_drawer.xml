@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_content_paste_black_24dp"
+            android:checked="true"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_monitor"
+            android:icon="@drawable/ic_tablet_black_24dp"
+            android:title="Monitor" />
+    </group>
+
+    <item android:title="History">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_ekg"
+                    android:icon="@drawable/ic_ekg"
+                    android:title="EKG / SPO2" />
+                <item
+                    android:id="@+id/nav_nibp"
+                    android:icon="@drawable/ic_ekg"
+                    android:title="NIBP" />
+                <item
+                    android:id="@+id/nav_kidney"
+                    android:icon="@drawable/ic_ekg"
+                    android:title="Kidney" />
+            </group>
+        </menu>
+    </item>
+
+</menu>

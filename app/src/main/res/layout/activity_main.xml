@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@android:color/background_light"
+    tools:context=".MainActivity"
+    >
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="204dp"
+            android:background="@android:color/background_light"
+            android:paddingBottom="20dp"
+            android:paddingTop="50dp"
+            app:srcCompat="@drawable/pms" />
+    </LinearLayout>
+
+    <TableRow
+        android:id="@+id/tableRow"
+        android:layout_width="867dp"
+        android:layout_height="61dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:paddingRight="20dp"
+            android:text="Username"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edittext"
+            android:ems="10"
+            android:inputType="text"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp" />
+
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow4"
+        android:layout_width="865dp"
+        android:layout_height="64dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableRow">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:paddingRight="20dp"
+            android:text="Password"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/txtPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edittext"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:ems="10"
+            android:inputType="text">
+
+        </EditText>
+
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="863dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableRow4">
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="20dp"
+            android:text="Remember me"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_sign_in"
+
+            android:layout_width="149dp"
+            android:layout_height="60dp"
+            android:background="@drawable/buttonshape"
+
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="Sign In"
+            android:textColor="#FAF2F3"
+            android:textSize="20sp" />
+
+    </TableRow>
+
+</android.support.constraint.ConstraintLayout>
