@@ -19,6 +19,7 @@ import timber.log.Timber;
 public class MainActivity extends AppCompatActivity {
     Button Sign_in;
     EditText username, password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +35,10 @@ public class MainActivity extends AppCompatActivity {
         Sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if(Submit()) {
-                Intent newActivity = new Intent(MainActivity.this, MainNavigationActivity.class);
-                startActivity(newActivity);
-            }
+                if (Submit()) {
+                    Intent newActivity = new Intent(MainActivity.this, MainNavigationActivity.class);
+                    startActivity(newActivity);
+                }
             }
         });
 
@@ -46,24 +47,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public boolean Submit()
-    {
+    public boolean Submit() {
         final AlertDialog.Builder adb = new AlertDialog.Builder(this);
         AlertDialog ad = adb.create();
-        if (username.getText().length()==0){
+        if (username.getText().length() == 0) {
             ad.setMessage("Please put username ");
             ad.show();
             return false;
         }
 
-        if (password.getText().length()==0){
+        if (password.getText().length() == 0) {
             ad.setMessage("Please put password ");
             ad.show();
             return false;
-        }
 
-        return true;
-    }
+            return true;
+        }
 
    /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,4 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }*/
+
+    }
 }
