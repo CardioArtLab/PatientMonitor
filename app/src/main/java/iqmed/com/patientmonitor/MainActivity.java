@@ -5,22 +5,23 @@ import android.content.pm.ActivityInfo;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.jraska.console.timber.ConsoleTree;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
-import com.parse.SignUpCallback;
+
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -53,19 +54,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(Submit()) {
-                    ParseUser.logInInBackground(username.getText().toString(), password.getText().toString(), new LogInCallback() {
-                        public void done(ParseUser user, ParseException e) {
-                            if (user != null) {
-                                Log.e("Login process:","Online Login Sucessful");
-                                Intent newActivity = new Intent(MainActivity.this, MainNavigationActivity.class);
-                                startActivity(newActivity);
-                            } else {
-                                // Login failed. Look at the ParseException to see what happened.
-                                Log.e("Login process:","Online Login Failed"+e);
-                                validate(username.getText().toString(),password.getText().toString());
-                            }
-                        }
-                    });
+                    if(validate(username.getText().toString(),password.getText().toString())){
+                        Intent newActivity = new Intent(MainActivity.this, MainNavigationActivity.class);
+                        startActivity(newActivity);
+                    }
+                    else {
+
+                    }
                 }
 
             }
@@ -97,25 +92,72 @@ public class MainActivity extends AppCompatActivity {
             final AlertDialog.Builder adb = new AlertDialog.Builder(this);
             AlertDialog ad = adb.create();
             if ((username1.equals("admin")) && (password1.equals("1234"))){
-                    Intent newActivity = new Intent(MainActivity.this, MainNavigationActivity.class);
-                    startActivity(newActivity);
-                    return true;
-                }
+                showToast("Login Successful! (Super ADMIN)");
+                return true;
+            }
 
                 else if ((username1.equals("user")) && (password1.equals("p"))){
-                    Intent newActivity = new Intent(MainActivity.this, MainNavigationActivity.class);
-                    startActivity(newActivity);
+                showToast("Login Successful! (Super ADMIN)");
                     return true;
             }
             else {
-                ad.setMessage("Incorrect Username or Password");
-                ad.show();
+                ParseUser.logInInBackground(username.getText().toString(), password.getText().toString(), new LogInCallback() {
+                            public void done(ParseUser user, ParseException e) {
+                                if (user != null) {
+                                    Log.e("Login process:", "Online Login Successful");
+                                    String type = user.getString("type");
+                                    showToast("Login Successful! (" + type +")");
+                                    Log.e("userType:", "successful-" + type);
+                                    Intent newActivity = new Intent(MainActivity.this, MainNavigationActivity.class);
+                                    startActivity(newActivity);
+                                } else {
+                                    // Login failed. Look at the ParseException to see what happened.
+                                    Log.e("Login process:", "Online Login Failed" + e);
+                                    Incorrect();
+
+                                }
+                            }
+                        }
+                );
+                /*ParseQuery<ParseUser> query = ParseUser.getQuery();
+                query.whereEqualTo("username", username);
+                query.whereEqualTo("password", password);
+                query.findInBackground(new FindCallback<ParseUser>() {
+                    public void done(List<ParseUser> objects, ParseException e) {
+                        if (e == null) {
+                            Log.e("Retriving:", "Succesful");
+                            // The query was successful.
+                            int size = objects.size();
+                            String type =objects.get(0).getString("type");
+                            if(size == 0) {
+                                Log.e("Retriving object:", "There are no object that match the credential");
+                                }
+                                else {
+                                showToast("userType: " + type);
+                                Log.e("Retriving object:", "successful");
+                                }
+                            }
+                         else {
+                            Log.e("Retriving:", "Failed");
+                            // Something went wrong.
+                        }
+                    }
+                });*/
+
+
                 return false;
             }
-
     }
-
-
+    public void Incorrect()
+    {
+        final AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        AlertDialog ad = adb.create();
+        ad.setMessage("Incorrect Username or Password");
+        ad.show();
+    }
+    private void showToast(String text) {
+        Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+    }
     }
 
    /* @Override
