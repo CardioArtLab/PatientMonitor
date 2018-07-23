@@ -34,9 +34,8 @@ public class Bluetooth implements DemoBluetoothFragment.DeviceDialogModalListene
     private OutputStream out;
 
     public Bluetooth(Context context) {
-        this.bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         this.context = context;
-        this.uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+        this.uuid = uuid;
         this.deviceCallback = null;
         this.connected = false;
         this.runOnUi = false;
@@ -49,7 +48,6 @@ public class Bluetooth implements DemoBluetoothFragment.DeviceDialogModalListene
 
     @Override
     public void beginConnect() {
-        connectToAddress(deviceAddress);
     }
 
     public void setCallbackOnUI(Activity activity){

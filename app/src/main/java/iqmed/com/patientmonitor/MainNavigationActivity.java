@@ -95,10 +95,15 @@ public class MainNavigationActivity extends AppCompatActivity
             if (id == R.id.nav_profile) {
                 fragment = ProfileFragment.newInstance(id);
             } else if (id == R.id.nav_monitor) {
-                // fragment = MonitorFragment.newInstance(id);
+                fragment = MonitorFragment.newInstance(id);
             } else if (id == R.id.action_logconsole) {
                 fragment = DemoBluetoothFragment.newInstance(id);
+            } else if (id == R.id.nav_kidney) {
+                fragment = InputOutputFragment.newInstance(id);
+            } else if (id == R.id.nav_add_kidney) {
+                fragment = AddDataFragment.newInstance(id);
             }
+
             if (fragment != null) {
                 FragmentManager manager = getSupportFragmentManager();
                 manager.beginTransaction().replace(R.id.flContent, fragment).commit();
